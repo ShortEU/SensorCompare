@@ -1,0 +1,22 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.log
+
+# Virtual environments
+venv/
+.env/
+
+# VS Code settings (unless intentionally shared)
+.vscode/
+
+# Data files
+sensor_plot_pc/SensorTest/**/*.csv
+
+# Microcontroller binaries
+*.uf2
+*.bin
+
+# OS-specific
+.DS_Store
+Thumbs.db
