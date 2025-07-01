@@ -1,6 +1,6 @@
-SensorBench
+SensorCompare
 
-SensorBench is a modular tool for acquiring, comparing, and visualizing sensor data using a Raspberry Pi Pico microcontroller and Python scripts on a PC.
+SensorCompare is a modular tool for acquiring, comparing, and visualizing sensor data using a Raspberry Pi Pico microcontroller and Python scripts on a PC.
 
 🚀 Features
 
@@ -12,19 +12,19 @@ Easy sensor benchmarking and CSV data export
 
 📦 Project Structure
 
-SensorBench/
+SensorCompare/
 ├── sensor_plot_pc/        # PC-side Python scripts for data handling and plotting
 ├── sensor_vergleich/      # Pico-side scripts for sensor communication and control
 ├── .gitignore
 ├── README.md
-└── SensorBench.code-workspace
+└── SensorCompare.code-workspace
 
 🛠️ Getting Started
 
 1. Clone the repository
 
-git clone https://github.com/ShortEU/SensorBench.git
-cd SensorBench
+git clone https://github.com/ShortEU/SensorCompare.git
+cd SensorCompare
 
 2. Set up your Python environments
 
@@ -66,7 +66,7 @@ pip
 
 Sensor data files (.csv) are not tracked by git (see .gitignore).
 
-Firmware files (.uf2) are not tracked by git; release separately if needed.
+Firmware files (.uf2) are not tracked by git;
 
 📄 License
 
