@@ -1,79 +1,111 @@
-SensorCompare
+# SensorVergleich – Spannungs-, Strom- und Umweltdaten erfassen & auswerten
 
-SensorCompare is a modular tool for acquiring, comparing, and visualizing sensor data using a Raspberry Pi Pico microcontroller and Python scripts on a PC.
+Dieses Projekt liest Daten von INA219 und AHT10 Sensoren auf einem Raspberry Pi Pico aus, überträgt sie per serieller Schnittstelle an den PC und speichert sie dort in einer CSV-Datei zur späteren grafischen Auswertung.
 
-🚀 Features
+---
 
-Collects data from sensors (AHT10, AHT20, INA219, etc.) via Raspberry Pi Pico
+## Projektstruktur
 
-PC-side scripts for automated data logging, sensor comparison, and live plotting
+```
+_sensorVergleich/     → Code für Raspberry Pi Pico
+_sensorPlotPC/        → Python-Skripte für Datenerfassung & Plotten
+  └─ SensorTest/      → Hier werden CSV-Dateien automatisch abgelegt
+```
 
-Easy sensor benchmarking and CSV data export
+---
 
-📦 Project Structure
+## Teil 1: PC-Vorbereitung
 
-SensorCompare/
-├── sensor_plot_pc/        # PC-side Python scripts for data handling and plotting
-├── sensor_vergleich/      # Pico-side scripts for sensor communication and control
-├── .gitignore
-├── README.md
-└── SensorCompare.code-workspace
+### 1. Virtuelle Umgebung einrichten (nur beim ersten Mal)
 
-🛠️ Getting Started
-
-1. Clone the repository
-
-git clone https://github.com/ShortEU/SensorCompare.git
-cd SensorCompare
-
-2. Set up your Python environments
-
-For each subproject, install dependencies:
-
-PC-side (Data Handling & Plotting)
-
-cd sensor_plot_pc
+```bash
+cd _sensorPlotPC
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+source venv/Scripts/activate  # Bei Windows mit Git Bash
+pip install -r requirements.txt  # Falls vorhanden
+Python Interpreter auswählen
 
-Microcontroller-side (Sensor Acquisition)
+# oder manuell:
+pip install matplotlib pyserial
+```
 
-cd ../sensor_vergleich
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+---
 
-🕹️ Usage
+## Teil 2: Microcontroller starten
 
-Flash the Raspberry Pi Pico with your .uf2 firmware as described in the Pico documentation.
+### 1. Öffne `main.py` aus `_sensorVergleich/` mit Pymakr.  
+### 2. Verbinde den Raspberry Pi Pico (USB).
+### 3. Starte das Skript auf dem Mikrocontroller.
 
-Use the PC scripts to collect, plot, and analyze sensor data.
+> Das Skript sendet alle 5 Sekunden CSV-formatierte Daten wie:
+> `3.28,102.53,24.51,49.34`
 
-See each subfolder's README for details.
+---
 
-🧰 Requirements
+## Teil 3: Testdaten erfassen (vom PC aus)
 
-Raspberry Pi Pico
+### 1. Starte das Datensammel-Skript:
 
-Supported sensors: AHT10, AHT20, AHT30, INA219, etc.
+```bash
+python datenfasser.py
+```
 
-Python 3.8+
+Die Daten werden gespeichert in:  
+`_sensorPlotPC/SensorTest/test_YYYY-MM-DD_HH-MM-SS.csv`
 
-pip
+---
 
-📁 Data & Privacy
+## Teil 4: Live-Plot (optional)
 
-Sensor data files (.csv) are not tracked by git (see .gitignore).
+### Starte den Plot während oder nach der Messung:
 
-Firmware files (.uf2) are not tracked by git;
+```bash
+python live_plot.py
+```
 
-📄 License
+Zeigt einen Live-Plot der eingehenden Sensorwerte von `COM3`.  
+Stelle sicher, dass kein anderes Skript (`datenfasser.py`, Pymakr) die serielle Schnittstelle blockiert.
 
-This project is private and not licensed for public distribution.
+---
 
-👤 Author
+## Teil 5: csv-plot (optional)
 
-Erwin Schellenberg / ShortEU on GitHub
+### Starte csv plot nach dem Erfassen der Daten:
 
-Test push from new account
+```bash
+python csv_plot.py
+```
+Wähle eine csv aus diese wird mit Matplotlib Grafisch dargestellt.
+
+---
+
+## Teil 6: vergleich-plot
+
+## Starte vergleich plot nach dem Erfassen der Daten:
+
+```bash
+python vergleich_plot.py
+```
+
+Wählt drei csv Daten aus den Ordnern AHT10,20 und 30 aus und vergleicht die Werte miteinander.
+Anschließend werden diese Grafisch dargestellt und können als PNG gespeichert werden
+
+---
+
+## Hinweise
+
+- COM-Port ggf. in `datenfasser.py` und `live_plot.py` anpassen (`COM3`)
+- Der Raspberry Pi Pico sendet kontinuierlich – Tests können manuell oder per Zeitbegrenzung beendet werden
+- `SensorTest/` wird automatisch erstellt – dort liegen deine .csv-Dateien
+
+---
+
+## To-Do / Ideen
+
+- [ ] GUI für Start/Stopp der Tests
+- [ ] Tests mit Metadaten (z. B. Umgebung, Testzweck)
+- [ ] Automatische Auswertung nach CSV-Erzeugung
+
+---
+
+Von E.S
