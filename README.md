@@ -7,8 +7,8 @@ Dieses Projekt liest Daten von INA219 und AHT10 Sensoren auf einem Raspberry Pi 
 ## Projektstruktur
 
 ```
-_sensorVergleich/     → Code für Raspberry Pi Pico
-_sensorPlotPC/        → Python-Skripte für Datenerfassung & Plotten
+sensor_vergleich/     → Code für Raspberry Pi Pico
+sensor_plot/        → Python-Skripte für Datenerfassung & Plotten
   └─ SensorTest/      → Hier werden CSV-Dateien automatisch abgelegt
 ```
 
@@ -19,10 +19,10 @@ _sensorPlotPC/        → Python-Skripte für Datenerfassung & Plotten
 ### 1. Virtuelle Umgebung einrichten (nur beim ersten Mal)
 
 ```bash
-cd _sensorPlotPC
+cd sensor_plot
 python -m venv venv
-source venv/Scripts/activate  # Bei Windows mit Git Bash
-pip install -r requirements.txt  # Falls vorhanden
+source venv/Scripts/activate  
+pip install -r requirements.txt # Noch nicht erstellt
 Python Interpreter auswählen
 
 # oder manuell:
@@ -33,7 +33,7 @@ pip install matplotlib pyserial
 
 ## Teil 2: Microcontroller starten
 
-### 1. Öffne `main.py` aus `_sensorVergleich/` mit Pymakr.  
+### 1. Öffne `main.py` aus `sensor_vergleich/` mit Pymakr.  
 ### 2. Verbinde den Raspberry Pi Pico (USB).
 ### 3. Starte das Skript auf dem Mikrocontroller.
 
@@ -51,7 +51,7 @@ python datenfasser.py
 ```
 
 Die Daten werden gespeichert in:  
-`_sensorPlotPC/SensorTest/test_YYYY-MM-DD_HH-MM-SS.csv`
+`sensor_plot/SensorTest/test_YYYY-MM-DD_HH-MM-SS.csv`
 
 ---
 
