@@ -20,3 +20,6 @@ sensor_plot_pc/SensorTest/**/*.csv
 # OS-specific
 .DS_Store
 Thumbs.db
+
+#Workspace
+SensorCompare.code-workspace
