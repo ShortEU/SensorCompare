@@ -23,8 +23,17 @@ class AHT10:
         if (status & 0x80) == 0x80:
             raise Exception("AHT10 is busy")
 
-        raw_temp = ((data[3] & 0x0F) << 16) | (data[4] << 8) | data[5]
-        raw_humi = (data[1] << 12) | (data[2] << 4) | (data[3] >> 4)
+        # Rohdaten für Temperatur zusammensetzen
+        temp_high = data[3] & 0x0F     # untere 4 Bits von data[3]
+        temp_mid  = data[4]            # ganzes Byte
+        temp_low  = data[5]            # ganzes Byte
+        raw_temp = (temp_high << 16) | (temp_mid << 8) | temp_low
+
+        # Rohdaten für Feuchte zusammensetzen
+        humi_high = data[1]            # ganzes Byte
+        humi_mid  = data[2]            # ganzes Byte
+        humi_low  = data[3] >> 4       # obere 4 Bits von data[3]
+        raw_humi = (humi_high << 12) | (humi_mid << 4) | humi_low
 
         temperature = (raw_temp / 1048576.0) * 200.0 - 50.0
         humidity = (raw_humi / 1048576.0) * 100.0
